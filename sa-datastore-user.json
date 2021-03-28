@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "toniton-opas-dev",
+  "private_key_id": "f8a6c477be4f79e11f8768a5058cf897f130e820",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDBGDUmvwI9gQ5/\nxA/JAPz2gDsKS68mz8gVF6bPmOiIxUA1mkqwm3uS4OvXmS/h1rY5p/8SOimwfGiH\n5O7oyg9MbTL2yy5RvKKYDtsUdYDkx2CiQphKVM+5Bcvdh/d6U64WJP+JElCLWYqu\n2dvKSUxpW3w7XLnbdsaDDlPjnhxtwyUs+qhTAjxNe+RkFWl5TJeUJO9FaOGW3huT\nE9Zp804Ir1Nfew6b49er0MFDx3TftTGJ+AuhqPbWySEvn1acxQMtLR/0LDrGp2Pf\nBJp5Ye+hCuJtMq2fTKsdVm3a0/cc1Xcx3CPHOq2UGEsjTTGeVRtbvmGHwRm9KOW9\nZ88C47LfAgMBAAECggEASm44Xr0V8ftDSYCbzREycRowp+FQnJdPOsIpLLB2QfI2\ns/LLg5QLaCyG/E4yJM2M5GCbc70zwLHT4T4f0V/B0eXt1S+wpRUfX5mqXRKGIqmv\n2BvvdAeJInrXgIcen+qNmj+cuIt0vKJBUPDtReZHK/11v7QYeD4qeu4U7BJQRwZa\n4Y3HO440Q0CqCAxoeuH23Q72mqNLBGliltMFQ9s7ItuH20fr49LbsQ7upKyjHc5w\nPf47kbBxGMs/WH59ZwpcK9BIokPJu6GtEZZ+ews4Tv6RNlIlUPsVX0rowHx7Hk5e\nlES9kZaPPgK99zaaQYJaT+gHV4UxJhn2yNtUoOwfYQKBgQD+Z6g+J6mRO4K/ULZb\nr8FXsOepcD6Gcb/prkcuKjy9NKjSbAAYB4g5AkWN33JNuMZAmCQ98VyEI7irREEK\nNn+nBYkNhv1mGPBAAiWfFS8WexakWGGDNTrMkQqYdS0oIk3XYff558R4SeDdqQS1\n3YePCcbHmWcXoGGLIcoy75rTVwKBgQDCTiRMSAfc+XsG3qadBot+zuR2rn7024CA\nu4nf5RJJbLHHJlqvcV5R/aXgPOtg49T1J+qwpV/Q3ta8skvlgXPCr9WkWP38Y4Be\ntQJT9yl4jPxTwjZ8sHmyVzE4xnUYmlMfSe3p90EuAhBkerP3xPjNDWDRaHVc24vc\nDHbnXewvuQKBgC2TqnuAJYvESpc1wYXJhezM36PmXP0/Ea+urkfh/0GyVnBkMtwb\nNVdpRca1+kdcTAA0gYGrZPSzZZkhQDmxK8tjXXtT7L/GxfvhppXKeMYhRRwqTUXx\nWlhdv7UygOWIx8NHZOKbmAIo0iVD63kdd/SzPq5xmBuOewsvAYeAj48/AoGAMfB7\ni8+HldfZMu7Oy9T+zVzHg2ld3/j6khuhWBY8GPsCxjipXiY5I8GZfISryn9EIK5d\nt4EJm1lqv5zjvN0Er6kZs9/bh57bQ3wqWQJRelZiE/T6pBmHbbrTP9BiECy56HTL\n3TJbYkPNisWus6PAfpNNqwS6BV+4FppthRGyvqECgYASLaB6j+fvvfa78+k+2x0X\nq8d/etfTdgFiw9Glc6JcI1JO6dWmDyMobpdDW8Kk8hL4dZKUSHfEqCOfmUZaFwG6\nMwXKit8lKs5PNSLLLCRRRIegK0Cezt3B8FucjuMEoJyV0GWTZKYUtsgxX2h2N28N\n6+zLgPUkbA8Fwg3KRbPelw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firestore-user@toniton-opas-dev.iam.gserviceaccount.com",
+  "client_id": "107803521502604661520",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firestore-user%40toniton-opas-dev.iam.gserviceaccount.com"
+}
