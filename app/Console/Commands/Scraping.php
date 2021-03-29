@@ -38,18 +38,16 @@ class Scraping extends Command
      */
     public function handle()
     {
-        echo "hello";
         $client = new Client();
-        $goutte = $client->request('GET', 'https://reserve.opas.jp/osakashi/Welcome.cgi');
-        $goutte->filter('div#news_list ul')->each(function ($ul) {
-            $ul->filter('li')->each(function ($li) {
-                echo "-------------\n";
-                echo 'タイトル：' . $li->filter('span')->text() . "\n";
-//                echo 'タイトル：' . $li->filter('.s-color-twister-title-link')->attr('title') . "\n";
-//                echo '参考価格：' . $li->filter('.s-price')->text() . "\n";
-//                echo 'ASIN：' . $li->attr('data-asin') . "\n";
-                echo "-------------\n";
-            });
-        });
+        $login_page = $client->request('GET', 'https://reserve.opas.jp/osakashi/Welcome.cgi');
+        $login_form = $login_page->filter('form')->form();
+        $login_form['txtRiyoshaCode'] = env('txtRiyoshaCode');
+        $login_form['txtPassWord'] = env('txtPassWord');
+        $client->submit($login_form);
+
+        $after_login_page = $client->request('GET', 'https://reserve.opas.jp/osakashi/Welcome.cgi');
+//        $login_page->filter('div.news_title')->each(function ($span) {
+//            echo 'タイトル：' . $span->text() . "\n";
+//        });
     }
 }
