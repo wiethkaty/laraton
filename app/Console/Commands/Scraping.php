@@ -21,6 +21,8 @@ class Scraping extends Command
      */
     protected $description = 'Command description';
 
+    protected $client;
+
     /**
      * Create a new command instance.
      *
@@ -29,6 +31,7 @@ class Scraping extends Command
     public function __construct()
     {
         parent::__construct();
+        $this->client = new Client();
     }
 
     /**
@@ -38,16 +41,47 @@ class Scraping extends Command
      */
     public function handle()
     {
-        $client = new Client();
-        $login_page = $client->request('GET', 'https://reserve.opas.jp/osakashi/Welcome.cgi');
-        $login_form = $login_page->filter('form')->form();
-        $login_form['txtRiyoshaCode'] = env('txtRiyoshaCode');
-        $login_form['txtPassWord'] = env('txtPassWord');
-        $client->submit($login_form);
+        $crawler = $this->login();
+        print $crawler->html();
+//        $crawler = $this->yoyaku($crawler);
+//        $crawler = $this->show_reservation($crawler, 4);
+//        print $this->client->html();
+    }
 
-        $after_login_page = $client->request('GET', 'https://reserve.opas.jp/osakashi/Welcome.cgi');
-//        $login_page->filter('div.news_title')->each(function ($span) {
-//            echo 'タイトル：' . $span->text() . "\n";
-//        });
+    private function login()
+    {
+        $login_page = $this->client->request('GET', 'https://reserve.opas.jp/osakashi/Welcome.cgi');
+        $form = $login_page->filter('form')->form();
+        $form['action'] = 'Enter';
+        $form['txtProcId'] = '/menu/Login';
+        $form['txtRiyoshaCode'] = env('txtRiyoshaCode');
+        $form['txtPassWord'] = env('txtPassWord');
+        return $this->client->submit($form);
+    }
+
+    private function yoyaku($crawler)
+    {
+        $crawler->filter('form')->form();
+        $form['action'] = 'Enter';
+        $form['txtProcId'] = '/menu/Menu';
+        $form['txtFunctionCode'] = 'YoyakuQuery';
+        return $this->client->submit($form);
+    }
+
+    private function show_reservation($crawler, $month)
+    {
+        $crawler->filter('form')->form();
+        $form['action'] = 'Setup';
+        $form['txtProcId'] = '/yoyaku/RiyoshaYoyakuList';
+        $form['txtFunctionCode'] = 'YoyakuQuery';
+        $form['selectedYoyakuUniqKey'] = '';
+        $form['hiddenCorrectRiyoShinseiYM'] = '';
+        $form['hiddenCollectDisplayNum'] = '5';
+        $form['pageIndex'] = '1';
+        $form['printedFlg'] = '';
+        $form['riyoShinseiYM'] = $month;
+        $form['reqDisplayInfoNum'] = '50';
+        $a = $this->client->submit($form);
+        print $a->html();
     }
 }
