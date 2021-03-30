@@ -22,6 +22,7 @@ class Scraping extends Command
     protected $description = 'Command description';
 
     protected $client;
+    protected $crawler;
 
     /**
      * Create a new command instance.
@@ -41,11 +42,9 @@ class Scraping extends Command
      */
     public function handle()
     {
-        $crawler = $this->login();
-        print $crawler->html();
-//        $crawler = $this->yoyaku($crawler);
-//        $crawler = $this->show_reservation($crawler, 4);
-//        print $this->client->html();
+        $this->login();
+        $this->yoyaku();
+        $this->show_reservation(4);
     }
 
     private function login()
@@ -56,32 +55,32 @@ class Scraping extends Command
         $form['txtProcId'] = '/menu/Login';
         $form['txtRiyoshaCode'] = env('txtRiyoshaCode');
         $form['txtPassWord'] = env('txtPassWord');
-        return $this->client->submit($form);
+        $this->crawler = $this->client->submit($form);
     }
 
-    private function yoyaku($crawler)
+    private function yoyaku()
     {
-        $crawler->filter('form')->form();
+        $form = $this->crawler->filter('form')->form();
         $form['action'] = 'Enter';
         $form['txtProcId'] = '/menu/Menu';
         $form['txtFunctionCode'] = 'YoyakuQuery';
-        return $this->client->submit($form);
+        $this->crawler = $this->client->submit($form);
     }
 
-    private function show_reservation($crawler, $month)
+    private function show_reservation($month)
     {
-        $crawler->filter('form')->form();
-        $form['action'] = 'Setup';
+        $form = $this->crawler->filter('form#formMain')->form();
         $form['txtProcId'] = '/yoyaku/RiyoshaYoyakuList';
-        $form['txtFunctionCode'] = 'YoyakuQuery';
+//        $form['txtFunctionCode'] = 'YoyakuQuery';
+        $form['action'] = 'Setup';
         $form['selectedYoyakuUniqKey'] = '';
         $form['hiddenCorrectRiyoShinseiYM'] = '';
         $form['hiddenCollectDisplayNum'] = '5';
         $form['pageIndex'] = '1';
         $form['printedFlg'] = '';
-        $form['riyoShinseiYM'] = $month;
-        $form['reqDisplayInfoNum'] = '50';
-        $a = $this->client->submit($form);
-        print $a->html();
+        $form['riyoShinseiYM']->select(date("Ym"));
+        $form['reqDisplayInfoNum']->select('50');
+        $this->crawler = $this->client->submit($form);
+        var_export($this->crawler->html());
     }
 }
