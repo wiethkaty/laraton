@@ -2,7 +2,7 @@
 /shelf/
 /workspace.xml
 # データソースのローカルストレージがファイルを無視しました
-/../../../../../:\xampp\htdocs\laraton\.idea/dataSources/
+/../../../../:\src\laraton24\.idea/dataSources/
 /dataSources.local.xml
 # エディターベースの HTTP クライアントリクエスト
 /httpRequests/

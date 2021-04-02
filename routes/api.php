@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\OpasController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,7 +16,3 @@ use App\Http\Controllers\API\OpasController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::resources([
-    'opas' => OpasController::class,
-]);
