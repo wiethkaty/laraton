@@ -19,5 +19,3 @@
 .idea/
 node_modules/
 tests/
-
-secret.yaml

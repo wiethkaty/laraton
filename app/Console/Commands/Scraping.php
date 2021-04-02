@@ -45,42 +45,75 @@ class Scraping extends Command
         $this->login();
         $this->yoyaku();
         $this->show_reservation(4);
+        $this->get_reservations();
     }
 
     private function login()
     {
-        $login_page = $this->client->request('GET', 'https://reserve.opas.jp/osakashi/Welcome.cgi');
-        $form = $login_page->filter('form')->form();
-        $form['action'] = 'Enter';
-        $form['txtProcId'] = '/menu/Login';
-        $form['txtRiyoshaCode'] = env('txtRiyoshaCode');
-        $form['txtPassWord'] = env('txtPassWord');
-        $this->crawler = $this->client->submit($form);
+        try {
+            $login_page = $this->client->request('GET', 'https://reserve.opas.jp/osakashi/Welcome.cgi');
+            $form = $login_page->filter('form')->form();
+            $form['action'] = 'Enter';
+            $form['txtProcId'] = '/menu/Login';
+            $form['txtRiyoshaCode'] = env('txtRiyoshaCode');
+            $form['txtPassWord'] = env('txtPassWord');
+            $this->crawler = $this->client->submit($form);
+        } catch (Exception $e) {
+            error_log(__METHOD__ . ' Exception was encountered: ' . get_class($e) . ' ' . $e->getMessage());
+        }
     }
 
     private function yoyaku()
     {
-        $form = $this->crawler->filter('form')->form();
-        $form['action'] = 'Enter';
-        $form['txtProcId'] = '/menu/Menu';
-        $form['txtFunctionCode'] = 'YoyakuQuery';
-        $this->crawler = $this->client->submit($form);
+        try {
+            $form = $this->crawler->filter('form')->form();
+            $form['action'] = 'Enter';
+            $form['txtProcId'] = '/menu/Menu';
+            $form['txtFunctionCode'] = 'YoyakuQuery';
+            $this->crawler = $this->client->submit($form);
+        } catch (Exception $e) {
+            error_log(__METHOD__ . ' Exception was encountered: ' . get_class($e) . ' ' . $e->getMessage());
+        }
     }
 
     private function show_reservation($month)
     {
-        $form = $this->crawler->filter('form#formMain')->form();
-        $form['txtProcId'] = '/yoyaku/RiyoshaYoyakuList';
-//        $form['txtFunctionCode'] = 'YoyakuQuery';
-        $form['action'] = 'Setup';
-        $form['selectedYoyakuUniqKey'] = '';
-        $form['hiddenCorrectRiyoShinseiYM'] = '';
-        $form['hiddenCollectDisplayNum'] = '5';
-        $form['pageIndex'] = '1';
-        $form['printedFlg'] = '';
-        $form['riyoShinseiYM']->select(date("Ym"));
-        $form['reqDisplayInfoNum']->select('50');
-        $this->crawler = $this->client->submit($form);
-        var_export($this->crawler->html());
+        try {
+            $form = $this->crawler->filter('form#formMain')->form();
+            $form['txtProcId'] = '/yoyaku/RiyoshaYoyakuList';
+            $form['action'] = 'Setup';
+            $form['selectedYoyakuUniqKey'] = '';
+            $form['hiddenCorrectRiyoShinseiYM'] = '';
+            $form['hiddenCollectDisplayNum'] = '5';
+            $form['pageIndex'] = '1';
+            $form['printedFlg'] = '';
+            $form['riyoShinseiYM']->select(date("Ym", strtotime("1 month")));
+            $form['reqDisplayInfoNum']->select('50');
+            $this->crawler = $this->client->submit($form);
+        } catch (Exception $e) {
+            error_log(__METHOD__ . ' Exception was encountered: ' . get_class($e) . ' ' . $e->getMessage());
+        }
+    }
+
+    private function get_reservations()
+    {
+        try {
+            $this->crawler->filter('div.tablebox table tr')->each(function ($tr) {
+                if (strpos($tr->text(), 'バドミントン') !== false) {
+                    $children = $tr->children();
+                    $date = $children->eq(0)->text();
+                    $gym = $children->eq(1)->text();
+                    $timeframe = $children->eq(2)->text();
+                    $fee = $children->eq(4)->text();
+                    echo 'date: '.$date."\n";
+                    echo 'gym: '.$gym."\n";
+                    echo 'timeframe: '.$timeframe."\n";
+                    echo 'fee: '.$fee."\n";
+                    echo "\n";
+                }
+            });
+        } catch (Exception $e) {
+            error_log(__METHOD__ . ' Exception was encountered: ' . get_class($e) . ' ' . $e->getMessage());
+        }
     }
 }
