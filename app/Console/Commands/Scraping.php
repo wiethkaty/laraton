@@ -159,6 +159,16 @@ class Scraping extends Command
 //                $doc = $this->db->collection($this->collection)->document($now);
 //                $doc->set($reservation);
 //            }
+            $id = env('txtRiyoshaCode');
+            $doc_ref = $this->db->collection('users')->document($id);
+            $snapshot = $doc_ref->snapshot();
+            if ($snapshot->exists()) {
+                printf('Document data:' . PHP_EOL);
+                print_r($snapshot->data());
+            } else {
+                printf('Document %s does not exist!' . PHP_EOL, $snapshot->id());
+            }
+
         } catch (Exception $e) {
             error_log(__METHOD__ . ' Exception was encountered: ' . get_class($e) . ' ' . $e->getMessage());
         }
